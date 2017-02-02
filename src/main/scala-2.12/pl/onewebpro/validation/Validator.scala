@@ -1,7 +1,6 @@
 package pl.onewebpro.validation
 
 import cats.data.{NonEmptyList, Validated}
-import pl.onewebpro.validation.entity.ValidationError
 
 
 object Validator {
@@ -11,3 +10,4 @@ object Validator {
 
   def failureOf[T](errs: List[ValidationError]): Validation[T] = Validated.Invalid(NonEmptyList(errs.head, errs.tail))
 }
+
