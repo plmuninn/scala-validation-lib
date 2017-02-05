@@ -3,6 +3,7 @@ package pl.onewebpro.basic
 import org.scalatest.{FlatSpec, Matchers}
 import pl.onewebpro.validation.data.Source
 import pl.onewebpro.validation.schema.Schema
+import pl.onewebpro.validation.Implicits._
 
 
 class ParamsMapSourceTest extends FlatSpec with Matchers {
@@ -49,8 +50,5 @@ class ParamsMapSourceTest extends FlatSpec with Matchers {
       "name" -> nonEmptyString,
       "lastName" -> nonEmptyString
     )(MyClass.apply)(MyClass.unapply)
-
-    schema.validate(map).leftMap(println)
-
   }
 }
