@@ -2,6 +2,7 @@ package pl.onewebpro.basic
 
 import org.scalatest.{FlatSpec, Matchers}
 import pl.onewebpro.validation.data.Source
+import pl.onewebpro.validation.schema.Schema
 
 
 class ParamsMapSourceTest extends FlatSpec with Matchers {
@@ -39,5 +40,17 @@ class ParamsMapSourceTest extends FlatSpec with Matchers {
 
     optionalValueValidation.isValid shouldBe true
     optionalValueValidation.toOption.get shouldBe 1
+  }
+
+  "OptionalValidator" should "validate" in {
+    case class MyClass(name: String, lastName: Iterable[String])
+
+    val schema = Schema(
+      "name" -> nonEmptyString,
+      "lastName" -> collection(nonEmptyString)
+    )(MyClass.apply)(MyClass.unapply)
+
+    schema.validate(map).isValid shouldBe true
+
   }
 }
