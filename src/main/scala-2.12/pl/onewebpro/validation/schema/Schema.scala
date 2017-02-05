@@ -6,10 +6,9 @@ import pl.onewebpro.validation.entity.{ValidationError, ValidationMap}
 
 
 trait Schema[R] {
-  def bind[S, A](field: ValidationMap[A], source: Source[S])
+  def bind[S, A](map: ValidationMap[A], source: Source[S])
                 (implicit extractor: Extractor[S, A]): Validated[A] =
-    (source.extract[A](field.key) andThen field.validator.apply)
-      .leftMap(values => values.map(ValidationError(field.key, _)))
+    source.validate(map).leftMap(values => values.map(ValidationError(map.key, _)))
 }
 
 object Schema {

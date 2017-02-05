@@ -1,5 +1,6 @@
 package pl.onewebpro.validation.data
 
+import pl.onewebpro.validation.entity.ValidationMap
 import pl.onewebpro.validation.{FieldName, Validation}
 
 /**
@@ -23,4 +24,12 @@ trait Source[T] {
     */
   def extract[A](fieldName: FieldName)(implicit extractor: Extractor[T, A]): Validation[A] =
     extractor(fieldName, source)
+
+  /**
+    * Validate value using validation map
+    *
+    * @return
+    */
+  def validate[A](map: ValidationMap[A])(implicit extractor: Extractor[T, A]): Validation[A] =
+    map.validate[T](this)
 }
