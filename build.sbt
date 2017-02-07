@@ -20,3 +20,5 @@ libraryDependencies ++= Seq(
   "org.scalatest" %% "scalatest"      % scalaTestVersion  % "test"
 
 )
+
+enablePlugins(spray.boilerplate.BoilerplatePlugin)
