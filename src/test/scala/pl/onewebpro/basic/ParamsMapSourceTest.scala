@@ -2,7 +2,7 @@ package pl.onewebpro.basic
 
 import org.scalatest.{FlatSpec, Matchers}
 import pl.onewebpro.validation.core.data.Source
-import pl.onewebpro.validation.schema.core.Schema
+import pl.onewebpro.validation.basic._
 import pl.onewebpro.validation.core.Implicits._
 
 
@@ -46,7 +46,7 @@ class ParamsMapSourceTest extends FlatSpec with Matchers {
   "OptionalValidator" should "validate" in {
     case class MyClass(name: String, lastName: String)
 
-    val schema = Schema(
+    schema(
       "name" -> nonEmptyString,
       "lastName" -> nonEmptyString
     )(MyClass.apply)(MyClass.unapply)
