@@ -1,6 +1,7 @@
 package pl.onewebpro.validation.core.data
 
 import pl.onewebpro.validation.core.Validator
+import pl.onewebpro.validation.core.entity.SimpleError
 import pl.onewebpro.validation.core.{FieldName, Validation}
 
 /**
@@ -11,7 +12,7 @@ import pl.onewebpro.validation.core.{FieldName, Validation}
   */
 trait Extractor[S, R] {
 
-  protected def error: Validation[R] = Validator.failure("error.invalid_type")
+  protected def error: Validation[R] = Validator.failure(SimpleError("error.invalid_type"))
 
   def apply(fieldName: FieldName, value: S): Validation[R]
 }
