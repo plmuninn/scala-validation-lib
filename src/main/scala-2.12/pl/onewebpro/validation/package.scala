@@ -3,7 +3,7 @@ package pl.onewebpro
 import pl.onewebpro.validation.basic.validators.{NonEmptyStringFieldValidator, TextFieldValidator}
 import pl.onewebpro.validation.core.entity.ValidationMap
 import pl.onewebpro.validation.core.schema.Schema
-import pl.onewebpro.validation.core.validator.{CollectionV, OptionalV, OptionalValidator, Validator}
+import pl.onewebpro.validation.core.validator._
 
 import scala.language.implicitConversions
 
@@ -13,13 +13,15 @@ package object validation {
 
   lazy val nonEmptyString = NonEmptyStringFieldValidator
 
-  lazy val textValidator: TextFieldValidator = textValidator()
-
   def textValidator(min: Int = 0, max: Int = 0): TextFieldValidator = new TextFieldValidator(min, max)
 
-  def optional[T](validator: Validator[T]): OptionalValidator[T] = new OptionalV(validator)
+  lazy val textValidator: TextFieldValidator = textValidator()
 
-  def collection[T](validator: Validator[T]): CollectionV[T] = new CollectionV(validator)
+  def optional[T](validator: Validator[T]): OptionalValidator[T] = new OptionalValidator(validator)
+
+  def collection[T](validator: Validator[T]): CollectionValidator[T] = new CollectionValidator(validator)
+
+  def of[T]: TypeValidator[T] = new TypeValidator[T]
 
   implicit def pairToMap[T](pair: (String, Validator[T])): ValidationMap[T] = {
     val (key, validator) = pair
