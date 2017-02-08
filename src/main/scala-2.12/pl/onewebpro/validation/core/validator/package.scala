@@ -57,14 +57,27 @@ package object validator {
       def combine(x: Iterable[T], y: Iterable[T]): Iterable[T] = x ++ y
     }
 
-    def apply(values: Iterable[T]): Validation[Iterable[T]] = values.map(validator.apply) match {
-      case Nil => Validator.success(Iterable.empty)
-      case head :: Nil => head.map(Iterable.apply(_))
-      // TODO: this need to be done better way
-      case head :: tail => tail.foldLeft(head.map(Iterable.apply(_))) {
-        case (v1, v2) => v1.combine(v2.map(Iterable.apply(_)))
+    def apply(values: Iterable[T]): Validation[Iterable[T]] =
+      values.map(validator.apply) match {
+        case Nil => Validator.success(Iterable.empty)
+        case head :: Nil => head.map(Iterable.apply(_))
+        // TODO: this need to be done better way
+        case head :: tail => tail.foldLeft(head.map(Iterable.apply(_))) {
+          case (v1, v2) => v1.combine(v2.map(Iterable.apply(_)))
+        }
       }
-    }
+  }
+
+  class NonEmptyCollectionValidator[T](validator: Validator[T]) extends CollectionValidator[T](validator) {
+    private def nonEmpty(values: Iterable[T]): Validation[Iterable[T]] =
+      if (values.isEmpty) {
+        Validator.failure(SimpleError("error.empty_list"))
+      } else {
+        Validator.success(values)
+      }
+
+    override def apply(values: Iterable[T]): Validation[Iterable[T]] =
+      super.apply(values) andThen nonEmpty
   }
 
 }

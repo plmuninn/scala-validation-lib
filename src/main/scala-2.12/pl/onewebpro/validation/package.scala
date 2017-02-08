@@ -1,6 +1,6 @@
 package pl.onewebpro
 
-import pl.onewebpro.validation.basic.validators.{NonEmptyStringFieldValidator, TextFieldValidator}
+import pl.onewebpro.validation.basic.validators.{Max, Min, NonEmptyStringFieldValidator, TextFieldValidator}
 import pl.onewebpro.validation.core.entity.ValidationMap
 import pl.onewebpro.validation.core.schema.Schema
 import pl.onewebpro.validation.core.validator._
@@ -20,6 +20,15 @@ package object validation {
   def optional[T](validator: Validator[T]): OptionalValidator[T] = new OptionalValidator(validator)
 
   def collection[T](validator: Validator[T]): CollectionValidator[T] = new CollectionValidator(validator)
+
+  def min(min: Int): Min = new Min(min)
+
+  def max(max: Int): Max = new Max(max)
+
+  def minAndMax(minValue: Int, maxValue: Int): MultiValidator[Int] = multi(min(minValue), max(maxValue))
+
+  def nonEmptyCollection[T](validator: Validator[T]): NonEmptyCollectionValidator[T] =
+    new NonEmptyCollectionValidator(validator)
 
   def multi[T](validators: Validator[T]*): MultiValidator[T] = new MultiValidator[T](validators)
 
