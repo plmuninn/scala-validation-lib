@@ -2,8 +2,7 @@ package pl.onewebpro.basic
 
 import org.scalatest.{FlatSpec, Matchers}
 import pl.onewebpro.validation.core.data.Source
-import pl.onewebpro.validation.basic._
-import pl.onewebpro.validation.core.Implicits._
+import pl.onewebpro.validation._
 
 
 class ParamsMapSourceTest extends FlatSpec with Matchers {
