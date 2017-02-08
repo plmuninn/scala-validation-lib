@@ -10,8 +10,7 @@ object NonEmptyStringFieldValidator extends Validator[String] {
   override def apply(value: String): Validation[String] =
     if (value.nonEmpty) {
       Validator.success(value)
-    }
-    else {
+    } else {
       Validator.failure(SimpleError("error.empty_string"))
     }
 }

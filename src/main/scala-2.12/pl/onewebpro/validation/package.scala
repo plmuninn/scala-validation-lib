@@ -21,6 +21,8 @@ package object validation {
 
   def collection[T](validator: Validator[T]): CollectionValidator[T] = new CollectionValidator(validator)
 
+  def multi[T](validators: Validator[T]*): MultiValidator[T] = new MultiValidator[T](validators)
+
   def of[T]: TypeValidator[T] = new TypeValidator[T]
 
   implicit def pairToMap[T](pair: (String, Validator[T])): ValidationMap[T] = {

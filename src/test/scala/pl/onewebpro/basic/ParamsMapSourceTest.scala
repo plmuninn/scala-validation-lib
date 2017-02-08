@@ -4,7 +4,6 @@ import org.scalatest.{FlatSpec, Matchers}
 import pl.onewebpro.validation.core.data.Source
 import pl.onewebpro.validation._
 
-
 class ParamsMapSourceTest extends FlatSpec with Matchers {
 
   val map: ParamsMap = Map(
@@ -45,9 +44,13 @@ class ParamsMapSourceTest extends FlatSpec with Matchers {
   "OptionalValidator" should "validate" in {
     case class MyClass(name: String, lastName: String)
 
-    schema(
-      "name" -> nonEmptyString,
-      "lastName" -> nonEmptyString
-    )(MyClass.apply)(MyClass.unapply)
+    val result =
+      schema(
+        "name" -> (nonEmptyString ++ nonEmptyString),
+        "lastName" -> multi(nonEmptyString, nonEmptyString)
+      )(MyClass.apply)(MyClass.unapply)
+        .validate(map)
+
+    result.isValid shouldBe false
   }
 }
