@@ -2,8 +2,8 @@ package pl.onewebpro
 
 import pl.onewebpro.basic.extractors.{IntegerExtractor, OptionalStringExtractor, StringExtractor}
 import pl.onewebpro.basic.validators.{NonEmptyStringFieldValidator, TextFieldValidator}
-import pl.onewebpro.validation.data.Source
-import pl.onewebpro.validation.validator.{CollectionV, OptionalV, OptionalValidator, Validator}
+import pl.onewebpro.validation.core.data.Source
+import pl.onewebpro.validation.core.validator.{CollectionV, OptionalV, OptionalValidator, Validator}
 
 package object basic {
   type ParamsMap = Map[String, String]

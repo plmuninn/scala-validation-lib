@@ -1,8 +1,8 @@
-package pl.onewebpro.validation.schema
+package pl.onewebpro.validation.core.schema
 
-import pl.onewebpro.validation.Validated
-import pl.onewebpro.validation.data.{Extractor, Source}
-import pl.onewebpro.validation.entity.{ValidationError, ValidationMap}
+import pl.onewebpro.validation.core.Validated
+import pl.onewebpro.validation.core.data.{Extractor, Source}
+import pl.onewebpro.validation.core.entity.{ValidationError, ValidationMap}
 
 trait Schema[R] {
   def bind[S, A](map: ValidationMap[A], source: Source[S])

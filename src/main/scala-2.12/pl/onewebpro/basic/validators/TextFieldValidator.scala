@@ -1,7 +1,8 @@
 package pl.onewebpro.basic.validators
 
-import pl.onewebpro.validation.{Validation, Validator}
-import pl.onewebpro.validation.validator.Validator
+import pl.onewebpro.validation.core.Validation
+import pl.onewebpro.validation.core.Validator
+import pl.onewebpro.validation.core.validator.Validator
 
 class TextFieldValidator(min: Int, max: Int) extends Validator[String] {
   override def apply(value: String): Validation[String] =

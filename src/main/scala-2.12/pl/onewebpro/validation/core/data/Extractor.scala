@@ -1,6 +1,7 @@
-package pl.onewebpro.validation.data
+package pl.onewebpro.validation.core.data
 
-import pl.onewebpro.validation.{FieldName, Validation, Validator}
+import pl.onewebpro.validation.core.Validator
+import pl.onewebpro.validation.core.{FieldName, Validation}
 
 /**
   * Extracts specific type from source. For example, from json it will extract string type of json

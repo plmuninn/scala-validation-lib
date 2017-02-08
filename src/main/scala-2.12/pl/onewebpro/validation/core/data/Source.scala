@@ -1,7 +1,7 @@
-package pl.onewebpro.validation.data
+package pl.onewebpro.validation.core.data
 
-import pl.onewebpro.validation.entity.ValidationMap
-import pl.onewebpro.validation.{FieldName, Validation}
+import pl.onewebpro.validation.core.entity.ValidationMap
+import pl.onewebpro.validation.core.{FieldName, Validation}
 
 /**
   * Represents source of data like json, xml file etc.

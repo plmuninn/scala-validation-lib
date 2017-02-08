@@ -1,4 +1,4 @@
-package pl.onewebpro.validation
+package pl.onewebpro.validation.core
 
 import cats.kernel.Semigroup
 

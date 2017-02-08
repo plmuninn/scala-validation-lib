@@ -1,8 +1,9 @@
 package pl.onewebpro.basic.extractors
 
 import pl.onewebpro.basic.ParamsMap
-import pl.onewebpro.validation.{Validation, Validator}
-import pl.onewebpro.validation.data.Extractor
+import pl.onewebpro.validation.core.Validation
+import pl.onewebpro.validation.core.Validator
+import pl.onewebpro.validation.core.data.Extractor
 
 import scala.util.{Failure, Success, Try}
 
