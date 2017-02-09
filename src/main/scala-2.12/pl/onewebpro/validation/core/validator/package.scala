@@ -1,7 +1,7 @@
 package pl.onewebpro.validation.core
 
 import cats.kernel.Semigroup
-import pl.onewebpro.validation.core.error.{ComposedError, ErrorWithKey, SimpleError}
+import pl.onewebpro.validation.core.error.{ComposedError, _}
 
 package object validator {
 
@@ -36,7 +36,7 @@ package object validator {
 
     override def apply(value: T): Validation[T] = {
       validators match {
-        case Nil => Validator.failure(SimpleError("error.empty_validator_list"))
+        case Nil => Validator.failure(multiValidatorError)
         case validator :: Nil => validator.apply(value)
         case head :: tail => tail.foldLeft(head.apply(value)) {
           case (validation, v1) => validation andThen v1.apply
@@ -82,7 +82,7 @@ package object validator {
   class NonEmptyCollectionValidator[T](validator: Validator[T]) extends CollectionValidator[T](validator) {
     private def nonEmpty(values: Iterable[T]): Validation[Iterable[T]] =
       if (values.isEmpty) {
-        Validator.failure(SimpleError("error.empty_list"))
+        Validator.failure(nonEmptyListError)
       } else {
         Validator.success(values)
       }

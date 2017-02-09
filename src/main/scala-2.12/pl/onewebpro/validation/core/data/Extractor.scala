@@ -1,9 +1,8 @@
 package pl.onewebpro.validation.core.data
 
 import cats.data.Validated.{Invalid, Valid}
-import pl.onewebpro.validation.core.Validator
-import pl.onewebpro.validation.core.error.SimpleError
-import pl.onewebpro.validation.core.{FieldName, Validation}
+import pl.onewebpro.validation.core.error._
+import pl.onewebpro.validation.core.{FieldName, Validation, Validator}
 
 /**
   * Extracts specific type from source. For example, from json it will extract string type of json
@@ -13,7 +12,7 @@ import pl.onewebpro.validation.core.{FieldName, Validation}
   */
 trait Extractor[S, R] {
 
-  protected def error: Validation[R] = Validator.failure(SimpleError("error.invalid_type"))
+  protected def error: Validation[R] = Validator.failure(invalidTypeError)
 
   def apply(fieldName: FieldName, value: S): Validation[R]
 }

@@ -1,6 +1,6 @@
 package pl.onewebpro
 
-import pl.onewebpro.validation.basic.validator.{Max, Min, NonEmptyStringFieldValidator, TextFieldValidator}
+import pl.onewebpro.validation.basic.validator.{Max, Min, NonEmptyStringValidator, TextFieldValidator}
 import pl.onewebpro.validation.core.data.{Extractor, OptionalExtractor}
 import pl.onewebpro.validation.core.entity.ValidationMap
 import pl.onewebpro.validation.core.schema.Schema
@@ -12,7 +12,7 @@ package object validation {
 
   lazy val schema = Schema
 
-  lazy val nonEmptyString = NonEmptyStringFieldValidator
+  lazy val nonEmptyString = NonEmptyStringValidator
 
   def textValidator(min: Int = 0, max: Int = 0): TextFieldValidator = new TextFieldValidator(min, max)
 
