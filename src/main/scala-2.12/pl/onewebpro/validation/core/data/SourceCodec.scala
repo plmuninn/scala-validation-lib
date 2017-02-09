@@ -1,6 +1,7 @@
 package pl.onewebpro.validation.core.data
 
 import scala.language.implicitConversions
+import scala.reflect.ClassTag
 
 /**
   * Codec for source
@@ -20,5 +21,5 @@ trait SourceCodec[T] {
 
   implicit def booleanExtractor: Extractor[T, Boolean]
 
-  implicit def collectionExtractor[A]: Extractor[T, Iterable[A]]
+  implicit def collectionExtractor[A: ClassTag]: Extractor[T, Iterable[A]]
 }

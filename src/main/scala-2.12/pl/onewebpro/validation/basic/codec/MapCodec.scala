@@ -1,8 +1,8 @@
 package pl.onewebpro.validation.basic.codec
 
-import pl.onewebpro.validation.basic.codec.extractor.TypeExtractor
+import pl.onewebpro.validation.basic.codec.extractor.{CollectionTypeExtractor, TypeExtractor}
 import pl.onewebpro.validation.core.data.{Extractor, SourceCodec}
-
+import scala.reflect._
 
 object MapCodec extends SourceCodec[ParamsMap] {
   override implicit lazy val stringExtractor: Extractor[ParamsMap, String] = new TypeExtractor
@@ -12,5 +12,6 @@ object MapCodec extends SourceCodec[ParamsMap] {
   override implicit lazy val floatExtractor: Extractor[ParamsMap, Float] = new TypeExtractor
   override implicit lazy val booleanExtractor: Extractor[ParamsMap, Boolean] = new TypeExtractor
 
-  override implicit def collectionExtractor[A]: Extractor[ParamsMap, Iterable[A]] = ???
+  override implicit def collectionExtractor[A: ClassTag]: Extractor[ParamsMap, Iterable[A]] =
+    new CollectionTypeExtractor[A]
 }

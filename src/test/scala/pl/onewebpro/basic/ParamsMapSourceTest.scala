@@ -8,7 +8,8 @@ class ParamsMapSourceTest extends FlatSpec with Matchers {
 
   val map: Map[String, Any] = Map(
     "firstKey" -> "value",
-    "integerType" -> 1
+    "integerType" -> 1,
+    "list" -> List(1, 1)
   )
 
   "ParamsMapSource" should "extract string" in {
@@ -39,16 +40,23 @@ class ParamsMapSourceTest extends FlatSpec with Matchers {
     optionalValueValidation.toOption.get shouldBe 1
   }
 
-  "OptionalValidator" should "validate" in {
-    case class MyClass(name: Option[String], lastName: String)
+  "ParamsMapSource" should "extract list of integers" in {
+    val optionalValueValidation = map.extract[Iterable[Int]]("list")
 
-    val result =
-      schema(
-        "name" -> optional(nonEmptyString),
-        "lastName" -> multi(nonEmptyString, nonEmptyString)
-      )(MyClass.apply)(MyClass.unapply)
-        .validate(map)
-
-    result.isValid shouldBe false
+    optionalValueValidation.isValid shouldBe true
+    optionalValueValidation.toOption.get shouldBe List(1, 1)
   }
+
+//  "OptionalValidator" should "validate" in {
+//    case class MyClass(name: Option[String], lastName: String)
+//
+//    val result =
+//      schema(
+//        "name" -> optional(nonEmptyString),
+//        "lastName" -> multi(nonEmptyString, nonEmptyString)
+//      )(MyClass.apply)(MyClass.unapply)
+//        .validate(map)
+//
+//    result.isValid shouldBe false
+//  }
 }
