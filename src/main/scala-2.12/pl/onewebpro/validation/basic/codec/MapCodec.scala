@@ -1,6 +1,6 @@
 package pl.onewebpro.validation.basic.codec
 
-import pl.onewebpro.validation.basic.codec.extractors.TypeExtractor
+import pl.onewebpro.validation.basic.codec.extractor.TypeExtractor
 import pl.onewebpro.validation.core.data.{Extractor, SourceCodec}
 
 
