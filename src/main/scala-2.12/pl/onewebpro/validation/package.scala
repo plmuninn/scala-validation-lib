@@ -1,6 +1,6 @@
 package pl.onewebpro
 
-import pl.onewebpro.validation.basic.validators.{Max, Min, NonEmptyStringFieldValidator, TextFieldValidator}
+import pl.onewebpro.validation.basic.validator.{Max, Min, NonEmptyStringFieldValidator, TextFieldValidator}
 import pl.onewebpro.validation.core.data.{Extractor, OptionalExtractor}
 import pl.onewebpro.validation.core.entity.ValidationMap
 import pl.onewebpro.validation.core.schema.Schema

@@ -1,4 +1,4 @@
-package pl.onewebpro.validation.basic.validators
+package pl.onewebpro.validation.basic.validator
 
 import pl.onewebpro.validation.core.entity.SimpleError
 import pl.onewebpro.validation.core.validator.Validator
