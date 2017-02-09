@@ -12,7 +12,10 @@ package object validator {
   trait Validator[S] {
     def apply(value: S): Validation[S]
 
+    // scalastyle:off
     def ++(validator: Validator[S]): Validator[S] = new MultiValidator[S](Iterable(this, validator))
+
+    // scalastyle:on
   }
 
   /**
@@ -26,8 +29,10 @@ package object validator {
     * Type for creating chain of validators
     */
   class MultiValidator[T](validators: Iterable[Validator[T]] = Iterable.empty) extends Validator[T] {
-
+    // scalastyle:off
     override def ++(validator: Validator[T]): Validator[T] = new MultiValidator[T](validators ++ Iterable(validator))
+
+    // scalastyle:on
 
     override def apply(value: T): Validation[T] = {
       validators match {
