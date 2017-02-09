@@ -1,10 +1,10 @@
 package pl.onewebpro.validation.core
 
 import cats.kernel.Semigroup
-import pl.onewebpro.validation.core.entity.SimpleError
-import pl.onewebpro.validation.core.error.{IteratorError, SimpleError}
+import pl.onewebpro.validation.core.error.{ComposedError, ErrorWithKey, SimpleError}
 
 package object validator {
+
   /**
     * Represetns validator. Validators need to be typed because they should be aware what they will validated.
     * Passing value to validator is done by Extractors.
@@ -60,7 +60,7 @@ package object validator {
     private def validateValues(values: Iterable[T]): Iterable[Validation[T]] =
       values.zipWithIndex.map {
         case (value, index) => validator.apply(value)
-          .leftMap(_.map(e => IteratorError(index.toString, e)))
+          .leftMap(_.map(e => ComposedError(index.toString, e)))
       }
 
     def apply(values: Iterable[T]): Validation[Iterable[T]] =
@@ -85,4 +85,5 @@ package object validator {
     override def apply(values: Iterable[T]): Validation[Iterable[T]] =
       super.apply(values) andThen nonEmpty
   }
+
 }
