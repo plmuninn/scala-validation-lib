@@ -1,8 +1,7 @@
 package pl.onewebpro.validation.basic.validator
 
-import pl.onewebpro.validation.core.Validation
-import pl.onewebpro.validation.core.Validator
-import pl.onewebpro.validation.core.entity.SimpleError
+import pl.onewebpro.validation.core.{Validation, Validator}
+import pl.onewebpro.validation.core.entity.WrongLengthError
 import pl.onewebpro.validation.core.validator.Validator
 
 class TextFieldValidator(min: Int, max: Int) extends Validator[String] {
@@ -10,6 +9,8 @@ class TextFieldValidator(min: Int, max: Int) extends Validator[String] {
     if (value.length >= min && value.length <= max) {
       Validator.success(value)
     } else {
-      Validator.failure(SimpleError("error.wrong_length"))
+      Validator.failure {
+        WrongLengthError("error.wrong_length", value.length, Some(min), Some(min))
+      }
     }
 }

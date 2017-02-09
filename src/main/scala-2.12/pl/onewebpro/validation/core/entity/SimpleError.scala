@@ -1,6 +1,4 @@
 package pl.onewebpro.validation.core.entity
 
 
-case class SimpleError(key: String) extends ErrorValue {
-  override def message: String = key
-}
+case class SimpleError(label: String) extends ErrorValue

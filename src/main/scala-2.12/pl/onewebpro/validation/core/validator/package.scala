@@ -1,7 +1,7 @@
 package pl.onewebpro.validation.core
 
 import cats.kernel.Semigroup
-import pl.onewebpro.validation.core.entity.SimpleError
+import pl.onewebpro.validation.core.entity.{IteratorError, SimpleError}
 
 package object validator {
 
@@ -57,8 +57,14 @@ package object validator {
       def combine(x: Iterable[T], y: Iterable[T]): Iterable[T] = x ++ y
     }
 
+    private def validateValues(values: Iterable[T]): Iterable[Validation[T]] =
+      values.zipWithIndex.map {
+        case (value, index) => validator.apply(value)
+          .leftMap(_.map(e => IteratorError(index.toString, e)))
+      }
+
     def apply(values: Iterable[T]): Validation[Iterable[T]] =
-      values.map(validator.apply) match {
+      this.validateValues(values) match {
         case Nil => Validator.success(Iterable.empty)
         case head :: Nil => head.map(Iterable.apply(_))
         // TODO: this need to be done better way
