@@ -3,7 +3,7 @@ package pl.onewebpro.validation.basic.validator
 import pl.onewebpro.validation.core.validator.Validator
 import pl.onewebpro.validation.core.Validation
 import pl.onewebpro.validation.core.Validator
-import pl.onewebpro.validation.core.entity.SimpleError
+import pl.onewebpro.validation.core.error.SimpleError
 
 
 object NonEmptyStringFieldValidator extends Validator[String] {

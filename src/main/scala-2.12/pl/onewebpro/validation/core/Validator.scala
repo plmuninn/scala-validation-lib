@@ -1,7 +1,7 @@
 package pl.onewebpro.validation.core
 
 import cats.data.{NonEmptyList, Validated => CatsValidator}
-import pl.onewebpro.validation.core.entity.ErrorValue
+import pl.onewebpro.validation.core.error.ErrorValue
 
 object Validator {
   def success[T](t: T): Validation[T] = CatsValidator.valid(t)

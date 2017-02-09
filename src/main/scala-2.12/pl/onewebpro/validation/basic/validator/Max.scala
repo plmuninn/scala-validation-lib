@@ -1,6 +1,6 @@
 package pl.onewebpro.validation.basic.validator
 
-import pl.onewebpro.validation.core.entity.WrongLengthError
+import pl.onewebpro.validation.core.error.WrongLengthError
 import pl.onewebpro.validation.core.validator.Validator
 import pl.onewebpro.validation.core.{Validation, Validator}
 

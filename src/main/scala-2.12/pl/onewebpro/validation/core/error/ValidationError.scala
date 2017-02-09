@@ -1,4 +1,4 @@
-package pl.onewebpro.validation.core.entity
+package pl.onewebpro.validation.core.error
 
 case class ValidationError(key: String, error: ErrorValue) {
 

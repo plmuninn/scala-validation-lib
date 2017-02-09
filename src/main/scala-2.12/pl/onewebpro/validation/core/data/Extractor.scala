@@ -2,7 +2,7 @@ package pl.onewebpro.validation.core.data
 
 import cats.data.Validated.{Invalid, Valid}
 import pl.onewebpro.validation.core.Validator
-import pl.onewebpro.validation.core.entity.SimpleError
+import pl.onewebpro.validation.core.error.SimpleError
 import pl.onewebpro.validation.core.{FieldName, Validation}
 
 /**

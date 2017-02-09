@@ -1,7 +1,8 @@
 package pl.onewebpro.validation.core
 
 import cats.kernel.Semigroup
-import pl.onewebpro.validation.core.entity.{IteratorError, SimpleError}
+import pl.onewebpro.validation.core.entity.SimpleError
+import pl.onewebpro.validation.core.error.{IteratorError, SimpleError}
 
 package object validator {
   /**

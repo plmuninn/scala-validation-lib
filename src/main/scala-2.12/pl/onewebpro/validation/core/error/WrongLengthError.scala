@@ -1,5 +1,4 @@
-package pl.onewebpro.validation.core.entity
-
+package pl.onewebpro.validation.core.error
 
 case class WrongLengthError(label: String, got: Int, min: Option[Int], max: Option[Int]) extends ErrorValue {
   override def message: String = (min, max) match {
