@@ -4,7 +4,6 @@ import cats.kernel.Semigroup
 import pl.onewebpro.validation.core.entity.{IteratorError, SimpleError}
 
 package object validator {
-
   /**
     * Represetns validator. Validators need to be typed because they should be aware what they will validated.
     * Passing value to validator is done by Extractors.
@@ -53,7 +52,7 @@ package object validator {
     */
   class CollectionValidator[T](val validator: Validator[T]) extends Validator[Iterable[T]] {
 
-    implicit val combine = new Semigroup[Iterable[T]] {
+    implicit lazy val combine = new Semigroup[Iterable[T]] {
       def combine(x: Iterable[T], y: Iterable[T]): Iterable[T] = x ++ y
     }
 
@@ -85,5 +84,4 @@ package object validator {
     override def apply(values: Iterable[T]): Validation[Iterable[T]] =
       super.apply(values) andThen nonEmpty
   }
-
 }
