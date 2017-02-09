@@ -1,6 +1,6 @@
 package pl.onewebpro
 
-import pl.onewebpro.basic.extractors.{IntegerExtractor, OptionalStringExtractor, StringExtractor}
+import pl.onewebpro.basic.extractors.{IntegerExtractor, StringExtractor}
 import pl.onewebpro.validation.core.data.Source
 
 import scala.language.implicitConversions
@@ -15,6 +15,5 @@ package object basic {
   }
 
   implicit val stringExtractor = StringExtractor
-  implicit val optionalStringExtractor = OptionalStringExtractor
   implicit val integerStringExtractor = new IntegerExtractor
 }

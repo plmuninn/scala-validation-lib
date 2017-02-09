@@ -1,6 +1,7 @@
 package pl.onewebpro
 
 import pl.onewebpro.validation.basic.validators.{Max, Min, NonEmptyStringFieldValidator, TextFieldValidator}
+import pl.onewebpro.validation.core.data.{Extractor, OptionalExtractor}
 import pl.onewebpro.validation.core.entity.ValidationMap
 import pl.onewebpro.validation.core.schema.Schema
 import pl.onewebpro.validation.core.validator._
@@ -38,4 +39,7 @@ package object validation {
     val (key, validator) = pair
     ValidationMap(key, validator)
   }
+
+  implicit def optionalExtractor[S, R](implicit extractor: Extractor[S, R]): Extractor[S, Option[R]] =
+    new OptionalExtractor(extractor)
 }

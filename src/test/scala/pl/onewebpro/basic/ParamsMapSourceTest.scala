@@ -42,11 +42,11 @@ class ParamsMapSourceTest extends FlatSpec with Matchers {
   }
 
   "OptionalValidator" should "validate" in {
-    case class MyClass(name: String, lastName: String)
+    case class MyClass(name: Option[String], lastName: String)
 
     val result =
       schema(
-        "name" -> (nonEmptyString ++ nonEmptyString),
+        "name" -> optional(nonEmptyString),
         "lastName" -> multi(nonEmptyString, nonEmptyString)
       )(MyClass.apply)(MyClass.unapply)
         .validate(map)

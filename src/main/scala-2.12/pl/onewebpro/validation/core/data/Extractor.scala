@@ -1,5 +1,6 @@
 package pl.onewebpro.validation.core.data
 
+import cats.data.Validated.{Invalid, Valid}
 import pl.onewebpro.validation.core.Validator
 import pl.onewebpro.validation.core.entity.SimpleError
 import pl.onewebpro.validation.core.{FieldName, Validation}
@@ -15,4 +16,15 @@ trait Extractor[S, R] {
   protected def error: Validation[R] = Validator.failure(SimpleError("error.invalid_type"))
 
   def apply(fieldName: FieldName, value: S): Validation[R]
+}
+
+/**
+  * Extractor for optional values
+  */
+class OptionalExtractor[S, R](extractor: Extractor[S, R]) extends Extractor[S, Option[R]] {
+  override def apply(fieldName: FieldName, value: S): Validation[Option[R]] =
+    extractor.apply(fieldName, value) match {
+      case Valid(v) => Validator.success(Some(v))
+      case Invalid(_) => Validator.success(None)
+    }
 }
