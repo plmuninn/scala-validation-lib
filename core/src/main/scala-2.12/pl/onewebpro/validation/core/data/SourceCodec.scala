@@ -17,8 +17,6 @@ trait SourceCodec[T] {
 
   implicit def doubleExtractor: Extractor[T, Double]
 
-  implicit def floatExtractor: Extractor[T, Float]
-
   implicit def booleanExtractor: Extractor[T, Boolean]
 
   implicit def collectionExtractor[A: ClassTag]: Extractor[T, Iterable[A]]
