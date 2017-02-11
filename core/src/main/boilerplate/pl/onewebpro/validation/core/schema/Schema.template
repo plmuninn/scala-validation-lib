@@ -19,8 +19,7 @@ object Schema {
 
 
 class Schema1[R, A1](apply: (A1) => R, unapply: (R) => Option[A1], a1: ValidationMap[A1]) extends Schema[R] {
-  def validate[T](source: T)(implicit f: (T) => Source[T], ex1: Extractor[T, A1]): Validated[R] = {
-    val s = f(source)
+  def validate[T](s: Source[T])(implicit ex1: Extractor[T, A1]): Validated[R] = {
     bind(a1, s).map(apply)
   }
 }
@@ -28,10 +27,9 @@ class Schema1[R, A1](apply: (A1) => R, unapply: (R) => Option[A1], a1: Validatio
 [1..21#class Schema2[R, A, [#A1#]]
 (apply: (A, [#A1#]) => R, unapply: (R) => Option[(A, [#A1#])], a: ValidationMap[A], [#a1: ValidationMap[A1]#]) extends Schema[R] {
 
-  def validate[T](source: T)
-                 (implicit f: (T) => Source[T], ex: Extractor[T, A], [#ex1: Extractor[T, A1]#]): Validated[R] = {
+  def validate[T](s: Source[T])
+                 (implicit ex: Extractor[T, A], [#ex1: Extractor[T, A1]#]): Validated[R] = {
     import cats.implicits._
-    val s = f(source)
     (bind(a, s) |@| [#bind(a1, s)# |@| ]).map(apply)
   }
 }#
