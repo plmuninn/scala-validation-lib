@@ -4,12 +4,12 @@ import cats.data.{NonEmptyList, Validated => CatsValidated}
 import pl.onewebpro.validation.basic.validator.{Max, Min, NonEmptyStringValidator, TextFieldValidator}
 import pl.onewebpro.validation.core.Validated
 import pl.onewebpro.validation.core.data.{Extractor, OptionalExtractor}
-import pl.onewebpro.validation.core.entity.ValidationMap
+import pl.onewebpro.validation.core.entity.{FieldMap, ValidationMap}
 import pl.onewebpro.validation.core.error.ComposedError
 import pl.onewebpro.validation.core.schema.Schema
 import pl.onewebpro.validation.core.validator._
-import scala.collection.mutable.{Map => MutableMap}
 
+import scala.collection.mutable.{Map => MutableMap}
 import scala.language.implicitConversions
 
 package object validation {
@@ -41,7 +41,7 @@ package object validation {
 
   implicit def pairToMap[T](pair: (String, Validator[T])): ValidationMap[T] = {
     val (key, validator) = pair
-    ValidationMap(key, validator)
+    FieldMap(key, validator)
   }
 
   implicit def optionalExtractor[S, R](implicit extractor: Extractor[S, R]): Extractor[S, Option[R]] =
