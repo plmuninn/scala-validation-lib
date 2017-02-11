@@ -1,5 +1,7 @@
 package pl.onewebpro.validation.core
 
+import cats.data.NonEmptyList
+
 
 package object error {
 
@@ -22,4 +24,7 @@ package object error {
 
   // Error for empty string in basic NonEmptyStringValidator
   lazy val emptyStringError = SimpleError("error.empty_string")
+
+  def composeError(key: String)(errors: NonEmptyList[ErrorValue]): NonEmptyList[ComposedError] =
+    errors.map((error) => ComposedError(key, error))
 }

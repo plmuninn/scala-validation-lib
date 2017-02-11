@@ -1,10 +1,14 @@
 package pl.onewebpro
 
+import cats.data.{NonEmptyList, Validated => CatsValidated}
 import pl.onewebpro.validation.basic.validator.{Max, Min, NonEmptyStringValidator, TextFieldValidator}
+import pl.onewebpro.validation.core.Validated
 import pl.onewebpro.validation.core.data.{Extractor, OptionalExtractor}
 import pl.onewebpro.validation.core.entity.ValidationMap
+import pl.onewebpro.validation.core.error.ComposedError
 import pl.onewebpro.validation.core.schema.Schema
 import pl.onewebpro.validation.core.validator._
+import scala.collection.mutable.{Map => MutableMap}
 
 import scala.language.implicitConversions
 
@@ -42,4 +46,27 @@ package object validation {
 
   implicit def optionalExtractor[S, R](implicit extractor: Extractor[S, R]): Extractor[S, Option[R]] =
     new OptionalExtractor(extractor)
+
+
+  implicit class ValidatedErrorsImplicits(errors: NonEmptyList[ComposedError]) {
+    def groupedByKey: Map[String, NonEmptyList[ComposedError]] = {
+      type Reducer = MutableMap[String, NonEmptyList[ComposedError]]
+
+      def foldToMutableMap: (Reducer, ComposedError) => Reducer = {
+        case (container, error) =>
+          val value: NonEmptyList[ComposedError] =
+            if (container.contains(error.key)) container(error.key).::(error) else NonEmptyList.of(error)
+          container += (error.key -> value)
+      }
+
+      errors.foldLeft[Reducer](MutableMap.empty)(foldToMutableMap).toMap
+    }
+  }
+
+  implicit class ValidatedImplicits[T](result: Validated[T]) {
+    def groupedErrors: CatsValidated[Map[String, NonEmptyList[ComposedError]], T] = {
+      result.leftMap(_.groupedByKey)
+    }
+  }
+
 }

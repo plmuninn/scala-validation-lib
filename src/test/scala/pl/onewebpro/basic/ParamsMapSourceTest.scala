@@ -47,16 +47,16 @@ class ParamsMapSourceTest extends FlatSpec with Matchers {
     optionalValueValidation.toOption.get shouldBe List(1, 1)
   }
 
-//  "OptionalValidator" should "validate" in {
-//    case class MyClass(name: Option[String], lastName: String)
-//
-//    val result =
-//      schema(
-//        "name" -> optional(nonEmptyString),
-//        "lastName" -> multi(nonEmptyString, nonEmptyString)
-//      )(MyClass.apply)(MyClass.unapply)
-//        .validate(map)
-//
-//    result.isValid shouldBe false
-//  }
+  "OptionalValidator" should "validate" in {
+    case class MyClass(name: Option[String], lastName: String)
+
+    val result =
+      schema(
+        "name" -> optional(nonEmptyString),
+        "lastName" -> multi(nonEmptyString, nonEmptyString)
+      )(MyClass.apply)(MyClass.unapply)
+        .validate(map)
+
+    result.isValid shouldBe false
+  }
 }
