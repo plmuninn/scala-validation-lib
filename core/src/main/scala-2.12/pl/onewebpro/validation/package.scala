@@ -1,13 +1,14 @@
 package pl.onewebpro
 
 import cats.data.{NonEmptyList, Validated => CatsValidated}
+import cats.kernel.Semigroup
 import pl.onewebpro.validation.basic.validator.{Max, Min, NonEmptyStringValidator, TextFieldValidator}
-import pl.onewebpro.validation.core.Validated
-import pl.onewebpro.validation.core.data.{Extractor, OptionalExtractor}
+import pl.onewebpro.validation.core.data.{OptionalTypeMapper, TypeMapper}
 import pl.onewebpro.validation.core.entity.{FieldMap, ValidationMap}
 import pl.onewebpro.validation.core.error.ComposedError
 import pl.onewebpro.validation.core.schema.Schema
 import pl.onewebpro.validation.core.validator._
+import pl.onewebpro.validation.core.{Validated, Validation, Validator}
 
 import scala.collection.mutable.{Map => MutableMap}
 import scala.language.implicitConversions
@@ -44,8 +45,8 @@ package object validation {
     FieldMap(key, validator)
   }
 
-  implicit def optionalExtractor[S, R](implicit extractor: Extractor[S, R]): Extractor[S, Option[R]] =
-    new OptionalExtractor(extractor)
+  implicit def optionalMapper[S, R](implicit extractor: TypeMapper[S, R]): TypeMapper[S, Option[R]] =
+    new OptionalTypeMapper(extractor)
 
 
   implicit class ValidatedErrorsImplicits(errors: NonEmptyList[ComposedError]) {
@@ -69,4 +70,19 @@ package object validation {
     }
   }
 
+  implicit class IterableValidationImplicit[T](values: Iterable[Validation[T]]) {
+
+    implicit lazy val combine = new Semigroup[Iterable[T]] {
+      def combine(x: Iterable[T], y: Iterable[T]): Iterable[T] = x ++ y
+    }
+
+    def swap: Validation[Iterable[T]] = values match {
+      case Nil => Validator.success(Iterable.empty)
+      case head :: Nil => head.map(Iterable.apply(_))
+      // TODO: this need to be done better way
+      case head :: tail => tail.foldLeft(head.map(Iterable.apply(_))) {
+        case (v1, v2) => v1.combine(v2.map(Iterable.apply(_)))
+      }
+    }
+  }
 }

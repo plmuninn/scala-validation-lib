@@ -10,19 +10,19 @@ import pl.onewebpro.validation.core.{FieldName, Validation, Validator}
   * @tparam S Source type for example json
   * @tparam R Result type we are expecting to get
   */
-trait Extractor[S, R] {
+trait TypeMapper[S, R] {
 
   protected def error: Validation[R] = Validator.failure(invalidTypeError)
 
-  def apply(fieldName: FieldName, value: S): Validation[R]
+  def apply(value: S): Validation[R]
 }
 
 /**
   * Extractor for optional values
   */
-class OptionalExtractor[S, R](extractor: Extractor[S, R]) extends Extractor[S, Option[R]] {
-  override def apply(fieldName: FieldName, value: S): Validation[Option[R]] =
-    extractor.apply(fieldName, value) match {
+class OptionalTypeMapper[S, R](extractor: TypeMapper[S, R]) extends TypeMapper[S, Option[R]] {
+  override def apply(value: S): Validation[Option[R]] =
+    extractor.apply(value) match {
       case Valid(v) => Validator.success(Some(v))
       case Invalid(_) => Validator.success(None)
     }

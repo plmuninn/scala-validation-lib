@@ -2,20 +2,25 @@ package pl.onewebpro.validation.circe
 
 import io.circe.Json
 import pl.onewebpro.validation.circe.extractor._
-import pl.onewebpro.validation.core.data.{Extractor, SourceCodec}
+import pl.onewebpro.validation.core.data.{Source, SourceCodec, TypeMapper}
 
 import scala.reflect.ClassTag
 
-object Codec extends SourceCodec[Json] {
-  override implicit val stringExtractor: Extractor[Json, String] = StringExtractor
+object Codec extends SourceCodec[Json, Option[Json]] {
 
-  override implicit val shortExtractor: Extractor[Json, Short] = ShortExtractor
+  override implicit def toSource(source: Json): Source[Json, Option[Json]] = new CirceSource(source)
 
-  override implicit val intExtractor: Extractor[Json, Int] = IntExtractor
+  override implicit val stringExtractor: TypeMapper[Option[Json], String] = StringTypeMapper
 
-  override implicit val doubleExtractor: Extractor[Json, Double] = DoubleExtractor
+  override implicit val shortExtractor: TypeMapper[Option[Json], Short] = ShortTypeMapper
 
-  override implicit val booleanExtractor: Extractor[Json, Boolean] = BooleanExtractor
+  override implicit val intExtractor: TypeMapper[Option[Json], Int] = IntTypeMapper
 
-  override implicit def collectionExtractor[A: ClassTag]: Extractor[Json, Iterable[A]] = ???
+  override implicit val doubleExtractor: TypeMapper[Option[Json], Double] = DoubleTypeMapper
+
+  override implicit val booleanExtractor: TypeMapper[Option[Json], Boolean] = BooleanTypeMapper
+
+  override implicit def collectionExtractor[A: ClassTag]
+  (implicit filedMapper: TypeMapper[Option[Json], A]): TypeMapper[Option[Json], Iterable[A]] =
+    new CollectionTypeMapper
 }

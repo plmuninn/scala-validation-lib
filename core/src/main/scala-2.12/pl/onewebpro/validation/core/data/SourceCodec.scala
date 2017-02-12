@@ -6,18 +6,18 @@ import scala.reflect.ClassTag
 /**
   * Codec for source
   */
-trait SourceCodec[T] {
-  implicit def toSource(source: T): Source[T] = new Source[T](source)
+trait SourceCodec[T, V] {
+  implicit def toSource(source: T): Source[T, V]
 
-  implicit def stringExtractor: Extractor[T, String]
+  implicit def stringExtractor: TypeMapper[V, String]
 
-  implicit def shortExtractor: Extractor[T, Short]
+  implicit def shortExtractor: TypeMapper[V, Short]
 
-  implicit def intExtractor: Extractor[T, Int]
+  implicit def intExtractor: TypeMapper[V, Int]
 
-  implicit def doubleExtractor: Extractor[T, Double]
+  implicit def doubleExtractor: TypeMapper[V, Double]
 
-  implicit def booleanExtractor: Extractor[T, Boolean]
+  implicit def booleanExtractor: TypeMapper[V, Boolean]
 
-  implicit def collectionExtractor[A: ClassTag]: Extractor[T, Iterable[A]]
+  implicit def collectionExtractor[A: ClassTag](implicit filedMapper: TypeMapper[V, A]): TypeMapper[V, Iterable[A]]
 }

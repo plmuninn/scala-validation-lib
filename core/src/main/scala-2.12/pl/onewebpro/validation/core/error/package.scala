@@ -22,6 +22,9 @@ package object error {
   // Error when extractor wasn't able to find required type
   lazy val invalidTypeError = SimpleError("error.invalid_type")
 
+  // Error when extractor wasn't able to find required type
+  lazy val fieldNotFound = SimpleError("error.field_not_found")
+
   // Error for empty string in basic NonEmptyStringValidator
   lazy val emptyStringError = SimpleError("error.empty_string")
 

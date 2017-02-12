@@ -1,6 +1,6 @@
 package pl.onewebpro.validation.core
 
-import cats.kernel.Semigroup
+import pl.onewebpro.validation._
 import pl.onewebpro.validation.core.error.{ComposedError, _}
 
 package object validator {
@@ -57,11 +57,6 @@ package object validator {
     * Validator for collections
     */
   class CollectionValidator[T](val validator: Validator[T]) extends Validator[Iterable[T]] {
-
-    implicit lazy val combine = new Semigroup[Iterable[T]] {
-      def combine(x: Iterable[T], y: Iterable[T]): Iterable[T] = x ++ y
-    }
-
     private def validateValues(values: Iterable[T]): Iterable[Validation[T]] =
       values.zipWithIndex.map {
         case (value, index) => validator.apply(value)
@@ -69,14 +64,7 @@ package object validator {
       }
 
     def apply(values: Iterable[T]): Validation[Iterable[T]] =
-      this.validateValues(values) match {
-        case Nil => Validator.success(Iterable.empty)
-        case head :: Nil => head.map(Iterable.apply(_))
-        // TODO: this need to be done better way
-        case head :: tail => tail.foldLeft(head.map(Iterable.apply(_))) {
-          case (v1, v2) => v1.combine(v2.map(Iterable.apply(_)))
-        }
-      }
+      this.validateValues(values).swap
   }
 
   class NonEmptyCollectionValidator[T](validator: Validator[T]) extends CollectionValidator[T](validator) {

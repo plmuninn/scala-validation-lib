@@ -4,7 +4,7 @@ import io.circe.JsonNumber
 import pl.onewebpro.validation.core.{Validation, Validator}
 
 
-object IntExtractor extends CirceNumberExtractor[Int] {
+object IntTypeMapper extends CirceNumberTypeMapper[Int] {
   override def apply(json: JsonNumber): Validation[Int] =
     json.toInt.fold(error)(Validator.success)
 }
