@@ -21,14 +21,14 @@ trait Source[T, V] {
     *
     * @return
     */
-  def extract[A](fieldName: FieldName)(implicit extractor: TypeMapper[V, A]): Validation[A] =
-    extractor.apply(findByName(fieldName))
+  def extract[A](fieldName: FieldName)(implicit mapper: TypeMapper[V, A]): Validation[A] =
+    mapper.apply(findByName(fieldName))
 
   /**
     * Validate value using validation map
     *
     * @return
     */
-  def validate[A](map: ValidationMap[A])(implicit extractor: TypeMapper[V, A]): Validation[A] =
+  def validate[A](map: ValidationMap[A])(implicit mapper: TypeMapper[V, A]): Validation[A] =
     map.validate[T, V](this)
 }

@@ -1,4 +1,4 @@
-package pl.onewebpro.validation.basic.codec.extractor
+package pl.onewebpro.validation.basic.codec.mapper
 
 import pl.onewebpro.validation.basic.codec.ParamsMap
 import pl.onewebpro.validation.core.FieldName

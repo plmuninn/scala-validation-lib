@@ -20,9 +20,9 @@ trait TypeMapper[S, R] {
 /**
   * Extractor for optional values
   */
-class OptionalTypeMapper[S, R](extractor: TypeMapper[S, R]) extends TypeMapper[S, Option[R]] {
+class OptionalTypeMapper[S, R](mapper: TypeMapper[S, R]) extends TypeMapper[S, Option[R]] {
   override def apply(value: S): Validation[Option[R]] =
-    extractor.apply(value) match {
+    mapper.apply(value) match {
       case Valid(v) => Validator.success(Some(v))
       case Invalid(_) => Validator.success(None)
     }

@@ -45,8 +45,8 @@ package object validation {
     FieldMap(key, validator)
   }
 
-  implicit def optionalMapper[S, R](implicit extractor: TypeMapper[S, R]): TypeMapper[S, Option[R]] =
-    new OptionalTypeMapper(extractor)
+  implicit def optionalMapper[S, R](implicit tm: TypeMapper[S, R]): TypeMapper[S, Option[R]] =
+    new OptionalTypeMapper(tm)
 
 
   implicit class ValidatedErrorsImplicits(errors: NonEmptyList[ComposedError]) {

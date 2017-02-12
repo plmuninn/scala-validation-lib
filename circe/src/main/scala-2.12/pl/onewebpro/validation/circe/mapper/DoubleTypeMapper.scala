@@ -1,4 +1,4 @@
-package pl.onewebpro.validation.circe.extractor
+package pl.onewebpro.validation.circe.mapper
 
 import io.circe.JsonNumber
 import pl.onewebpro.validation.core.{Validation, Validator}

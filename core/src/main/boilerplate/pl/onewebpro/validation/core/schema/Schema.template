@@ -7,7 +7,7 @@ import pl.onewebpro.validation.core.error._
 
 trait Schema[R] {
   def bind[S, A, V](map: ValidationMap[A], source: Source[S, V])
-                (implicit extractor: TypeMapper[V, A]): Validated[A] =
+                (implicit tm: TypeMapper[V, A]): Validated[A] =
     source.validate(map).leftMap(composeError(map.key))
 }
 
@@ -19,7 +19,7 @@ object Schema {
 
 
 class Schema1[R, A1](apply: (A1) => R, unapply: (R) => Option[A1], a1: ValidationMap[A1]) extends Schema[R] {
-  def validate[T, V](s: Source[T, V])(implicit ex1: TypeMapper[V, A1]): Validated[R] = {
+  def validate[T, V](s: Source[T, V])(implicit tm1: TypeMapper[V, A1]): Validated[R] = {
     bind(a1, s).map(apply)
   }
 }
@@ -28,7 +28,7 @@ class Schema1[R, A1](apply: (A1) => R, unapply: (R) => Option[A1], a1: Validatio
 (apply: (A, [#A1#]) => R, unapply: (R) => Option[(A, [#A1#])], a: ValidationMap[A], [#a1: ValidationMap[A1]#]) extends Schema[R] {
 
   def validate[T, V](s: Source[T, V])
-                 (implicit ex: TypeMapper[V, A], [#ex1: TypeMapper[V, A1]#]): Validated[R] = {
+                 (implicit tm: TypeMapper[V, A], [#tm1: TypeMapper[V, A1]#]): Validated[R] = {
     import cats.implicits._
     (bind(a, s) |@| [#bind(a1, s)# |@| ]).map(apply)
   }
