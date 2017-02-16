@@ -37,4 +37,4 @@ lazy val circe = (project in file("circe"))
 
 lazy val root = (project in file("."))
   .settings(commonSettings, name := "validation-lib")
-  .aggregate(core, akka, circe)
+  .aggregate(core, circe)

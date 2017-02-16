@@ -80,9 +80,10 @@ package object validation {
       case Nil => Validator.success(Iterable.empty)
       case head :: Nil => head.map(Iterable.apply(_))
       // TODO: this need to be done better way
-      case head :: tail => tail.foldLeft(head.map(Iterable.apply(_))) {
+      case _ => values.tail.foldLeft(values.head.map(Iterable.apply(_))) {
         case (v1, v2) => v1.combine(v2.map(Iterable.apply(_)))
       }
     }
   }
+
 }

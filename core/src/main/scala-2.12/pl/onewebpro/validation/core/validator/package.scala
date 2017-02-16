@@ -45,7 +45,7 @@ package object validator {
       validators match {
         case Nil => Validator.failure(multiValidatorError)
         case validator :: Nil => validator.apply(value)
-        case head :: tail => tail.foldLeft(head.apply(value)) {
+        case _ => validators.tail.foldLeft(validators.head.apply(value)) {
           case (validation, v1) => validation andThen v1.apply
         }
       }
