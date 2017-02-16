@@ -1,5 +1,6 @@
 package pl.onewebpro.validation.core
 
+import cats.data.Validated.Valid
 import pl.onewebpro.validation._
 import pl.onewebpro.validation.core.error.{ComposedError, _}
 
@@ -13,7 +14,11 @@ package object validator {
     def apply(value: S): Validation[S]
 
     // scalastyle:off
-    def ++(validator: Validator[S]): Validator[S] = new MultiValidator[S](Iterable(this, validator))
+    def +(validator: Validator[S]): Validator[S] = new MultiValidator[S](Iterable(this, validator))
+
+    def ++(validator: Validator[S]*): Validator[S] = new MultiValidator[S](Iterable(this) ++ validator)
+
+    def ||(validator: Validator[S]): Validator[S] = new OrValidator(this, validator)
 
     // scalastyle:on
   }
@@ -30,7 +35,9 @@ package object validator {
     */
   class MultiValidator[T](validators: Iterable[Validator[T]] = Iterable.empty) extends Validator[T] {
     // scalastyle:off
-    override def ++(validator: Validator[T]): Validator[T] = new MultiValidator[T](validators ++ Iterable(validator))
+    override def +(validator: Validator[T]): Validator[T] = new MultiValidator[T](validators ++ Iterable(validator))
+
+    override def ++(validator: Validator[T]*): Validator[T] = new MultiValidator[T](validators ++ validator)
 
     // scalastyle:on
 
@@ -43,6 +50,14 @@ package object validator {
         }
       }
     }
+  }
+
+  class OrValidator[T](first: Validator[T], second: Validator[T]) extends Validator[T] {
+    override def apply(value: T): Validation[T] =
+      first.apply(value) match {
+        case Valid(v) => Validator.success(v)
+        case _ => second.apply(value)
+      }
   }
 
   /**

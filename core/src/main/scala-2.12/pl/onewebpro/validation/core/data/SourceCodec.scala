@@ -4,20 +4,26 @@ import scala.language.implicitConversions
 import scala.reflect.ClassTag
 
 /**
-  * Codec for source
+  * Codec for some type of source
+  *
+  * @tparam T Source type
+  * @tparam V Contract type - it defines type of value return by source
   */
 trait SourceCodec[T, V] {
-  implicit def toSource(source: T): Source[T, V]
+  type SourceT = T
+  type Contract = V
 
-  implicit def stringMapper: TypeMapper[V, String]
+  implicit def toSource(source: T): Source[SourceT, Contract]
 
-  implicit def shortMapper: TypeMapper[V, Short]
+  implicit def stringMapper: TypeMapper[Contract, String]
 
-  implicit def intMapper: TypeMapper[V, Int]
+  implicit def shortMapper: TypeMapper[Contract, Short]
 
-  implicit def doubleMapper: TypeMapper[V, Double]
+  implicit def intMapper: TypeMapper[Contract, Int]
 
-  implicit def booleanMapper: TypeMapper[V, Boolean]
+  implicit def doubleMapper: TypeMapper[Contract, Double]
 
-  implicit def collectionMapper[A: ClassTag](implicit filedMapper: TypeMapper[V, A]): TypeMapper[V, Iterable[A]]
+  implicit def booleanMapper: TypeMapper[Contract, Boolean]
+
+  implicit def collectionMapper[A: ClassTag](implicit filedMapper: TypeMapper[Contract, A]): TypeMapper[Contract, Iterable[A]]
 }

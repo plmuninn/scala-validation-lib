@@ -16,10 +16,6 @@ val commonLibs = Seq(
 
 val coreLibs = Seq()
 
-val akkaLibs = Seq(
-
-)
-
 val circeLibs = Seq(
   "io.circe" %% "circe-core" % circeVersion,
   "io.circe" %% "circe-generic" % circeVersion,
@@ -32,12 +28,6 @@ lazy val core = (project in file("core"))
     name := "validation-core",
     libraryDependencies ++= coreLibs ++ commonLibs)
   .enablePlugins(spray.boilerplate.BoilerplatePlugin)
-
-lazy val akka = (project in file("akka"))
-  .settings(commonSettings,
-    name := "validation-akka",
-    libraryDependencies ++= akkaLibs ++ commonLibs)
-  .dependsOn(core)
 
 lazy val circe = (project in file("circe"))
   .settings(commonSettings,

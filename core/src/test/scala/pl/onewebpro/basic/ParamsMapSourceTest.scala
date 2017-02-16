@@ -53,7 +53,7 @@ class ParamsMapSourceTest extends FlatSpec with Matchers {
     val result =
       schema(
         "name" -> optional(nonEmptyString),
-        "lastName" -> multi(nonEmptyString, nonEmptyString)
+        "lastName" -> (nonEmptyString || nonEmptyString)
       )(MyClass.apply)(MyClass.unapply)
         .validate(map)
 
