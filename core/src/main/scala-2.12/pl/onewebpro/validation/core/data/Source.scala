@@ -18,16 +18,12 @@ trait Source[T, V] {
 
   /**
     * Extracts data from source by name, for example we want to get string
-    *
-    * @return
     */
   def extract[A](fieldName: FieldName)(implicit mapper: TypeMapper[V, A]): Validation[A] =
     mapper.apply(findByName(fieldName))
 
   /**
     * Validate value using validation map
-    *
-    * @return
     */
   def validate[A](map: ValidationMap[A])(implicit mapper: TypeMapper[V, A]): Validation[A] =
     map.validate[T, V](this)

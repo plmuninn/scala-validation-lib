@@ -31,7 +31,7 @@ package object validator {
   }
 
   /**
-    * Type for creating chain of validators
+    * Type for creating chain of validators. All of them need to return Valid[T] otherwise value is invalid.
     */
   class MultiValidator[T](validators: Iterable[Validator[T]] = Iterable.empty) extends Validator[T] {
     // scalastyle:off
@@ -52,11 +52,14 @@ package object validator {
     }
   }
 
-  class OrValidator[T](first: Validator[T], second: Validator[T]) extends Validator[T] {
+  /**
+    * Validator that will work like `or`, `||`. It will return Valid[T] if left or right validator will return Valid[T]
+    */
+  class OrValidator[T](left: Validator[T], right: Validator[T]) extends Validator[T] {
     override def apply(value: T): Validation[T] =
-      first.apply(value) match {
+      left.apply(value) match {
         case Valid(v) => Validator.success(v)
-        case _ => second.apply(value)
+        case _ => right.apply(value)
       }
   }
 
@@ -69,7 +72,7 @@ package object validator {
   }
 
   /**
-    * Validator for collections
+    * Validator for collections. It will consider empty collection a valid collection
     */
   class CollectionValidator[T](val validator: Validator[T]) extends Validator[Iterable[T]] {
     private def validateValues(values: Iterable[T]): Iterable[Validation[T]] =
@@ -82,6 +85,9 @@ package object validator {
       this.validateValues(values).swap
   }
 
+  /**
+    * Validator for non empty collections
+    */
   class NonEmptyCollectionValidator[T](validator: Validator[T]) extends CollectionValidator[T](validator) {
     private def nonEmpty(values: Iterable[T]): Validation[Iterable[T]] =
       if (values.isEmpty) {

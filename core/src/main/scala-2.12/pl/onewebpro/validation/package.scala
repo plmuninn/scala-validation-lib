@@ -40,16 +40,24 @@ package object validation {
 
   def of[T]: TypeValidator[T] = new TypeValidator[T]
 
+  // Map "key" -> validator to FieldMap
   implicit def pairToMap[T](pair: (String, Validator[T])): ValidationMap[T] = {
     val (key, validator) = pair
     FieldMap(key, validator)
   }
 
+  // Implicitly resolve optional values
   implicit def optionalMapper[S, R](implicit tm: TypeMapper[S, R]): TypeMapper[S, Option[R]] =
     new OptionalTypeMapper(tm)
 
-
+  /**
+    * Implicits for validation result errors
+    */
   implicit class ValidatedErrorsImplicits(errors: NonEmptyList[ComposedError]) {
+    /**
+      * We can group errors by key. Tha mean, if our field had many validators and all of them returned some error. We
+      * can group this errors using field name.
+      */
     def groupedByKey: Map[String, NonEmptyList[ComposedError]] = {
       type Reducer = MutableMap[String, NonEmptyList[ComposedError]]
 
@@ -64,18 +72,30 @@ package object validation {
     }
   }
 
+  /**
+    * Implicits for validation result
+    */
   implicit class ValidatedImplicits[T](result: Validated[T]) {
+    /**
+      * Provides same grouping like  ValidatedErrorsImplicits.groupedByKey but before we are resolving result.
+      */
     def groupedErrors: CatsValidated[Map[String, NonEmptyList[ComposedError]], T] = {
       result.leftMap(_.groupedByKey)
     }
   }
 
+  /**
+    * Implicits for validation collections
+    */
   implicit class IterableValidationImplicit[T](values: Iterable[Validation[T]]) {
 
     implicit lazy val combine = new Semigroup[Iterable[T]] {
       def combine(x: Iterable[T], y: Iterable[T]): Iterable[T] = x ++ y
     }
 
+    /**
+      * Transformation Iterable[Validation[T]] => Validation[Iterable[T]].
+      */
     def swap: Validation[Iterable[T]] = values match {
       case Nil => Validator.success(Iterable.empty)
       case head :: Nil => head.map(Iterable.apply(_))

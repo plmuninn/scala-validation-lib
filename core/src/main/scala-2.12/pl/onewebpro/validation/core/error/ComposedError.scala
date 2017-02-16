@@ -1,5 +1,9 @@
 package pl.onewebpro.validation.core.error
 
+/**
+  * Class represents composed error for more complex error schemas. It gives way
+  * to handle chained keys with errors. For example  "object" -> "list" -> 10th element -> error
+  */
 case class ComposedError(key: String, error: ErrorValue) extends ErrorValue {
 
   lazy val keys: Iterable[String] = error match {
