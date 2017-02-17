@@ -1,6 +1,5 @@
-package pl.onewebpro.validation.basic.codec.mapper
+package pl.onewebpro.validation.basic.codec
 
-import pl.onewebpro.validation.basic.codec.ParamsMap
 import pl.onewebpro.validation.core.FieldName
 import pl.onewebpro.validation.core.data.Source
 
