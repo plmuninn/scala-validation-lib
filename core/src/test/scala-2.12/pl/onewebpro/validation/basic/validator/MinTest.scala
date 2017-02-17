@@ -1,9 +1,9 @@
 package pl.onewebpro.validation.basic.validator
 
-import org.scalatest.{FlatSpec, Matchers}
+import pl.onewebpro.validation.test.UnitTest
 
 
-class MinTest extends FlatSpec with Matchers {
+class MinTest extends UnitTest {
   "Min" should "validate properly" in {
     val validator = new Min(10)
     validator.apply(10).isValid shouldBe true

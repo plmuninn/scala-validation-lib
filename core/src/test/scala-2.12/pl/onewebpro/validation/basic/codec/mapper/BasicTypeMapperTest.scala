@@ -1,9 +1,9 @@
 package pl.onewebpro.validation.basic.codec.mapper
 
-import org.scalatest.{FlatSpec, Matchers}
+import pl.onewebpro.validation.test.UnitTest
 
 
-class BasicTypeMapperTest extends FlatSpec with Matchers {
+class BasicTypeMapperTest extends UnitTest {
   "BasicTypeMapper" should "map simple type" in {
     val stringMapper = new BasicTypeMapper[String]()
     stringMapper.apply(Some("")).isValid shouldBe true

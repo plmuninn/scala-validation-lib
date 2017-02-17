@@ -1,9 +1,9 @@
 package pl.onewebpro.validation.basic.validator
 
-import org.scalatest.{FlatSpec, Matchers}
+import pl.onewebpro.validation.test.UnitTest
 
 
-class MaxTest extends FlatSpec with Matchers {
+class MaxTest extends UnitTest {
   "Max" should "validate properly" in {
     val validator = new Max(10)
     validator.apply(10).isValid shouldBe true

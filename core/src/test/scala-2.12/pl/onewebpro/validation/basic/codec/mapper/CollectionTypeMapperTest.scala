@@ -1,9 +1,9 @@
 package pl.onewebpro.validation.basic.codec.mapper
 
-import org.scalatest.{FlatSpec, Matchers}
+import pl.onewebpro.validation.test.UnitTest
 
 
-class CollectionTypeMapperTest extends FlatSpec with Matchers {
+class CollectionTypeMapperTest extends UnitTest {
   implicit val stringMapper = new BasicTypeMapper[String]()
   val mapper = new CollectionTypeMapper[String]()
 

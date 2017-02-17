@@ -1,10 +1,10 @@
 package pl.onewebpro.validation.circe.mapper
 
 import io.circe.Json
-import org.scalatest.{FlatSpec, Matchers}
+import pl.onewebpro.validation.test.UnitTest
 
 
-class CollectionTypeMapperTest extends FlatSpec with Matchers {
+class CollectionTypeMapperTest extends UnitTest {
   implicit val implicitValidator = StringTypeMapper
   val validator = new CollectionTypeMapper[String]()
 

@@ -1,10 +1,10 @@
 package pl.onewebpro.validation.circe
 
 import io.circe.Json
-import org.scalatest.{FlatSpec, Matchers}
+import pl.onewebpro.validation.test.UnitTest
 
 
-class CirceSourceTest extends FlatSpec with Matchers {
+class CirceSourceTest extends UnitTest {
   "CirceSource" should "return proper value" in {
     val properJson = Json.obj(
       "someKey" -> Json.fromString("I am value!")

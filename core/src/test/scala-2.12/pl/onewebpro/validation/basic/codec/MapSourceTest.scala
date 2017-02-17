@@ -1,8 +1,8 @@
 package pl.onewebpro.validation.basic.codec
 
-import org.scalatest.{FlatSpec, Matchers}
+import pl.onewebpro.validation.test.UnitTest
 
-class MapSourceTest extends FlatSpec with Matchers {
+class MapSourceTest extends UnitTest {
   val sourceData = Map(
     "key" -> "value"
   )

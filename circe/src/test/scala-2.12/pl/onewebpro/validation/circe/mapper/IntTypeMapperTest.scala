@@ -1,10 +1,9 @@
 package pl.onewebpro.validation.circe.mapper
 
 import io.circe.Json
-import org.scalatest.{FlatSpec, Matchers}
+import pl.onewebpro.validation.test.UnitTest
 
-
-class IntTypeMapperTest extends FlatSpec with Matchers {
+class IntTypeMapperTest extends UnitTest {
   "IntTypeMapper" should "handle valid json" in {
     val valid = Json.fromInt(1)
     IntTypeMapper(Some(valid)).isValid shouldBe true

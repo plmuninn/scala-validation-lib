@@ -1,11 +1,11 @@
 package pl.onewebpro.validation.circe
 
 import io.circe.Json
-import org.scalatest.{FlatSpec, Matchers}
 import pl.onewebpro.validation.circe.Codec._
+import pl.onewebpro.validation.test.UnitTest
 import pl.onewebpro.validation.{of => ofV, _}
 
-class CodecTest extends FlatSpec with Matchers {
+class CodecTest extends UnitTest {
 
   case class TestClass(name: String, age: Int, money: Double, isMarried: Boolean, cars: Iterable[String])
 

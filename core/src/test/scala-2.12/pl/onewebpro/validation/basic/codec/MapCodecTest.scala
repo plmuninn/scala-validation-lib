@@ -1,10 +1,10 @@
 package pl.onewebpro.validation.basic.codec
 
-import org.scalatest.{FlatSpec, Matchers}
 import pl.onewebpro.validation.basic.codec.MapCodec._
+import pl.onewebpro.validation.test.UnitTest
 import pl.onewebpro.validation.{of => ofV, _}
 
-class MapCodecTest extends FlatSpec with Matchers {
+class MapCodecTest extends UnitTest {
   val strucutreData = Map(
     "name" -> "Alfred",
     "age" -> 18,

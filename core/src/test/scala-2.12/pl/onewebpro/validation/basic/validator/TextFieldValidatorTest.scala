@@ -1,9 +1,9 @@
 package pl.onewebpro.validation.basic.validator
 
-import org.scalatest.{FlatSpec, Matchers}
+import pl.onewebpro.validation.test.UnitTest
 
 
-class TextFieldValidatorTest extends FlatSpec with Matchers {
+class TextFieldValidatorTest extends UnitTest {
   "TextFieldValidator" should "validate properly" in {
     val validator = new TextFieldValidator(2, 10)
     validator.apply("").isValid shouldBe false
