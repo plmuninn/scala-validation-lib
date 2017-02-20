@@ -10,8 +10,6 @@ import pl.onewebpro.validation.core.{FieldName, Validation}
   * @tparam V Agreed type of value for formatter
   */
 trait Source[T, V] {
-  type Value = V
-
   def source: T
 
   def findByName(fieldName: FieldName): V
