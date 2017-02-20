@@ -10,19 +10,19 @@ import pl.onewebpro.validation.core.{FieldName, Validation, Validator}
   * @tparam S Source type for example json
   * @tparam R Result type we are expecting to get
   */
-trait TypeMapper[S, R] {
+trait Formatter[S, R] {
 
-  protected def error: Validation[R] = Validator.failure(invalidTypeError)
+  protected def error: Validation[R] = Validator.failure(invalidFormatError)
 
   def apply(value: S): Validation[R]
 }
 
 /**
-  * Mapper for optional values
+  * Formatter for optional values
   */
-class OptionalTypeMapper[S, R](mapper: TypeMapper[S, R]) extends TypeMapper[S, Option[R]] {
+class OptionalFormatter[S, R](formatter: Formatter[S, R]) extends Formatter[S, Option[R]] {
   override def apply(value: S): Validation[Option[R]] =
-    mapper.apply(value) match {
+    formatter.apply(value) match {
       case Valid(v) => Validator.success(Some(v))
       case Invalid(_) => Validator.success(None)
     }

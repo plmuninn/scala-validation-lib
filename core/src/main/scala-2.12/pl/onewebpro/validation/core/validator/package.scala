@@ -16,7 +16,7 @@ package object validator {
     // scalastyle:off
     def +(validator: Validator[S]): Validator[S] = new MultiValidator[S](Iterable(this, validator))
 
-    def ++(validator: Validator[S]*): Validator[S] = new MultiValidator[S](Iterable(this) ++ validator)
+    def ++(validators: Validator[S]*): Validator[S] = new MultiValidator[S](Iterable(this) ++ validators)
 
     def ||(validator: Validator[S]): Validator[S] = new OrValidator[S](this, validator)
 

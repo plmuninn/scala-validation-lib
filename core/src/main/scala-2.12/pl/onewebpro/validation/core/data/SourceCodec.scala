@@ -15,15 +15,15 @@ trait SourceCodec[T, V] {
 
   implicit def toSource(source: T): Source[SourceT, Contract]
 
-  implicit def stringMapper: TypeMapper[Contract, String]
+  implicit def stringFormat: Formatter[Contract, String]
 
-  implicit def shortMapper: TypeMapper[Contract, Short]
+  implicit def shortFormat: Formatter[Contract, Short]
 
-  implicit def intMapper: TypeMapper[Contract, Int]
+  implicit def intFormat: Formatter[Contract, Int]
 
-  implicit def doubleMapper: TypeMapper[Contract, Double]
+  implicit def doubleFormat: Formatter[Contract, Double]
 
-  implicit def booleanMapper: TypeMapper[Contract, Boolean]
+  implicit def booleanFormat: Formatter[Contract, Boolean]
 
-  implicit def collectionMapper[A: ClassTag](implicit filedMapper: TypeMapper[Contract, A]): TypeMapper[Contract, Iterable[A]]
+  implicit def collectionFormat[A: ClassTag](implicit filedFormat: Formatter[Contract, A]): Formatter[Contract, Iterable[A]]
 }

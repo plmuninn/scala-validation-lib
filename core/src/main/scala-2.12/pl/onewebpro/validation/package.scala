@@ -3,7 +3,7 @@ package pl.onewebpro
 import cats.data.{NonEmptyList, Validated => CatsValidated}
 import cats.kernel.Semigroup
 import pl.onewebpro.validation.basic.validator.{Max, Min, NonEmptyStringValidator, TextFieldValidator}
-import pl.onewebpro.validation.core.data.{OptionalTypeMapper, TypeMapper}
+import pl.onewebpro.validation.core.data.{OptionalFormatter, Formatter}
 import pl.onewebpro.validation.core.entity.{FieldMap, ValidationMap}
 import pl.onewebpro.validation.core.error.ComposedError
 import pl.onewebpro.validation.core.schema.Schema
@@ -47,8 +47,8 @@ package object validation {
   }
 
   // Implicitly resolve optional values
-  implicit def optionalMapper[S, R](implicit tm: TypeMapper[S, R]): TypeMapper[S, Option[R]] =
-    new OptionalTypeMapper(tm)
+  implicit def optionalFormatter[S, R](implicit fm: Formatter[S, R]): Formatter[S, Option[R]] =
+    new OptionalFormatter(fm)
 
   /**
     * Implicits for validation result errors

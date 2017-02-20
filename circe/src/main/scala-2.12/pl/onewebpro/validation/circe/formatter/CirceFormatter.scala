@@ -1,11 +1,11 @@
-package pl.onewebpro.validation.circe.mapper
+package pl.onewebpro.validation.circe.formatter
 
 import io.circe.Json
-import pl.onewebpro.validation.core.data.TypeMapper
+import pl.onewebpro.validation.core.data.Formatter
 import pl.onewebpro.validation.core.{FieldName, Validation}
 
 
-trait CirceTypeMapper[T] extends TypeMapper[Option[Json], T] {
+trait CirceFormatter[T] extends Formatter[Option[Json], T] {
 
   protected def apply(json: Json): Validation[T]
 

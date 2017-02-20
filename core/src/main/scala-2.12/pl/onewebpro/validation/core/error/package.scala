@@ -20,7 +20,7 @@ package object error {
   lazy val multiValidatorError = SimpleError("error.empty_validator_list")
 
   // Error when extractor wasn't able to find required type
-  lazy val invalidTypeError = SimpleError("error.invalid_type")
+  lazy val invalidFormatError = SimpleError("error.invalid_format")
 
   // Error when extractor wasn't able to find required type
   lazy val fieldNotFound = SimpleError("error.field_not_found")

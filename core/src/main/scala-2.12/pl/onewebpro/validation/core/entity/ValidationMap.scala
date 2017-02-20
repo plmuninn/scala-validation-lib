@@ -1,7 +1,7 @@
 package pl.onewebpro.validation.core.entity
 
 import pl.onewebpro.validation.core.Validation
-import pl.onewebpro.validation.core.data.{TypeMapper, Source}
+import pl.onewebpro.validation.core.data.{Formatter, Source}
 import pl.onewebpro.validation.core.validator.Validator
 
 /**
@@ -10,7 +10,7 @@ import pl.onewebpro.validation.core.validator.Validator
 trait ValidationMap[T] {
   def key: String
 
-  def validate[S, V](source: Source[S, V])(implicit tm: TypeMapper[V, T]): Validation[T]
+  def validate[S, V](source: Source[S, V])(implicit fm: Formatter[V, T]): Validation[T]
 }
 
 /**
@@ -20,12 +20,12 @@ case class FieldMap[T](key: String, validator: Validator[T]) extends ValidationM
   /**
     * Extract value from source
     */
-  protected def extract[S, V](source: Source[S, V])(implicit tm: TypeMapper[V, T]): Validation[T] =
+  protected def extract[S, V](source: Source[S, V])(implicit fm: Formatter[V, T]): Validation[T] =
     source.extract(key)
 
   /**
     * Validate value for given source
     */
-  override def validate[S, V](source: Source[S, V])(implicit tm: TypeMapper[V, T]): Validation[T] =
+  override def validate[S, V](source: Source[S, V])(implicit fm: Formatter[V, T]): Validation[T] =
     extract(source) andThen validator.apply
 }

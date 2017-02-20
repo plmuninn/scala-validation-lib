@@ -1,7 +1,7 @@
 package pl.onewebpro.validation.basic.codec
 
-import pl.onewebpro.validation.basic.codec.mapper.{CollectionTypeMapper, BasicTypeMapper}
-import pl.onewebpro.validation.core.data.{Source, SourceCodec, TypeMapper}
+import pl.onewebpro.validation.basic.codec.formatter.{CollectionTypeFormatter, TypeFormatter}
+import pl.onewebpro.validation.core.data.{Source, SourceCodec, Formatter}
 
 import scala.language.implicitConversions
 import scala.reflect._
@@ -9,14 +9,13 @@ import scala.reflect._
 object MapCodec extends SourceCodec[ParamsMap, Option[Any]] {
   override implicit def toSource(source: ParamsMap): Source[SourceT, Contract] = new MapSource(source)
 
-  override implicit lazy val stringMapper: TypeMapper[Contract, String] = new BasicTypeMapper
-  override implicit lazy val shortMapper: TypeMapper[Contract, Short] = new BasicTypeMapper
-  override implicit lazy val intMapper: TypeMapper[Contract, Int] = new BasicTypeMapper
-  override implicit lazy val doubleMapper: TypeMapper[Contract, Double] = new BasicTypeMapper
+  override implicit lazy val stringFormat: Formatter[Contract, String] = new TypeFormatter[String]
+  override implicit lazy val shortFormat: Formatter[Contract, Short] = new TypeFormatter[Short]
+  override implicit lazy val intFormat: Formatter[Contract, Int] = new TypeFormatter[Int]
+  override implicit lazy val doubleFormat: Formatter[Contract, Double] = new TypeFormatter[Double]
+  override implicit lazy val booleanFormat: Formatter[Contract, Boolean] = new TypeFormatter[Boolean]
 
-  override implicit lazy val booleanMapper: TypeMapper[Contract, Boolean] = new BasicTypeMapper
-
-  override implicit def collectionMapper[A: ClassTag]
-  (implicit filedMapper: TypeMapper[Contract, A]): TypeMapper[Contract, Iterable[A]] =
-    new CollectionTypeMapper[A]
+  override implicit def collectionFormat[A: ClassTag]
+  (implicit fieldFormatter: Formatter[Contract, A]): Formatter[Contract, Iterable[A]] =
+    new CollectionTypeFormatter[A]
 }
