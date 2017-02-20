@@ -23,20 +23,20 @@ package object validation {
 
   lazy val textValidator: TextFieldValidator = textValidator()
 
-  def optional[T](validator: Validator[T]): OptionalValidator[T] = new OptionalValidator(validator)
+  def optional[T](validator: Validator[T]): Validator[Option[T]] = validator.optional
 
-  def collection[T](validator: Validator[T]): CollectionValidator[T] = new CollectionValidator(validator)
+  def collection[T](validator: Validator[T]): Validator[Iterable[T]] = new CollectionValidator(validator)
 
   def min(min: Int): Min = new Min(min)
 
   def max(max: Int): Max = new Max(max)
 
-  def minAndMax(minValue: Int, maxValue: Int): MultiValidator[Int] = multi(min(minValue), max(maxValue))
+  def minAndMax(minValue: Int, maxValue: Int): Validator[Int] = multi(min(minValue), max(maxValue))
 
-  def nonEmptyCollection[T](validator: Validator[T]): NonEmptyCollectionValidator[T] =
+  def nonEmptyCollection[T](validator: Validator[T]): Validator[Iterable[T]] =
     new NonEmptyCollectionValidator(validator)
 
-  def multi[T](validators: Validator[T]*): MultiValidator[T] = new MultiValidator[T](validators)
+  def multi[T](validators: Validator[T]*): Validator[T] = new MultiValidator[T](validators)
 
   def of[T]: TypeValidator[T] = new TypeValidator[T]
 
