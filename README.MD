@@ -1,6 +1,6 @@
 # Validation Library
 
-Validation library inspired by [Scala forms](https://playframework.com/documentation/2.5.x/ScalaForms). Based on [ctas](http://typelevel.org/cats/) 
+Validation library inspired by [Scala forms](https://playframework.com/documentation/2.5.x/ScalaForms). Based on [cats](http://typelevel.org/cats/) 
 validation interface.
 
 ## Description
