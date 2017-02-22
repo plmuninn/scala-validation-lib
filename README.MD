@@ -5,7 +5,7 @@ validation interface.
 
 ## Description
 My goal was to create library with similar syntax like [Scala forms](https://playframework.com/documentation/2.5.x/ScalaForms) together with type checking on compilation level, but for various source of 
-data. For now I created codecs for [circe](circe.github.io/circe/) and `Map[String, Any]` sources. 
+data. For now I created codecs for [circe](https://circe.github.io/circe/) and `Map[String, Any]` sources. 
 
 Lib is not handling multi complex structures (like class in class).
 
