@@ -2,7 +2,7 @@ package pl.onewebpro.validation.core.data
 
 import cats.data.Validated.{Invalid, Valid}
 import pl.onewebpro.validation.core.error._
-import pl.onewebpro.validation.core.{FieldName, Validation, Validator}
+import pl.onewebpro.validation.core.{Validation, Validator}
 
 /**
   * Map source value to result value. For example, json string will map to normal string
