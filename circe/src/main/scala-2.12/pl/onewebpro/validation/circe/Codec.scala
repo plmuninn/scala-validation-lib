@@ -7,7 +7,7 @@ import pl.onewebpro.validation.core.data.{Source, SourceCodec, Formatter}
 import scala.language.implicitConversions
 import scala.reflect.ClassTag
 
-object Codec extends SourceCodec[Json, Option[Json]] {
+object Codec extends SourceCodec[Json, Json] {
 
   override implicit def toSource(source: Json): Source[SourceT, Contract] = new CirceSource(source)
 

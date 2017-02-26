@@ -6,11 +6,11 @@ import pl.onewebpro.validation.test.UnitTest
 class ShortFormatterTest extends UnitTest {
   "ShortFormatter" should "handle valid json" in {
     val valid = Json.fromInt(1)
-    ShortFormatter(Some(valid)).isValid shouldBe true
+    ShortFormatter(valid).isValid shouldBe true
   }
 
   it should "handle invalid json" in {
     val invalid = Json.fromString("some string")
-    ShortFormatter(Some(invalid)).isValid shouldBe false
+    ShortFormatter(invalid).isValid shouldBe false
   }
 }

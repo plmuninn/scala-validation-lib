@@ -5,10 +5,11 @@ import pl.onewebpro.validation.core.{Validation, Validator}
 
 import scala.reflect.ClassTag
 
-class CollectionTypeFormatter[T: ClassTag](implicit formatter: Formatter[Option[Any], T]) extends Formatter[Option[Any], Iterable[T]] {
-  override def apply(value: Option[Any]): Validation[Iterable[T]] =
+class CollectionTypeFormatter[T: ClassTag](implicit formatter: Formatter[Any, T]) extends Formatter[Any, Iterable[T]] {
+  override def apply(value: Any): Validation[Iterable[T]] =
     value match {
-      case Some(list: Iterable[T]) => list.map(value => formatter.apply(Option(value))).swap
+        // We need to check is T is really T because Iterable[T] is contravariant (+T)
+      case list: Iterable[T] => list.map(value => formatter.apply(value)).swap
       case _ => error
     }
 }

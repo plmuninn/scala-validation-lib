@@ -6,7 +6,7 @@ import pl.onewebpro.validation.core.data.{Source, SourceCodec, Formatter}
 import scala.language.implicitConversions
 import scala.reflect._
 
-object MapCodec extends SourceCodec[ParamsMap, Option[Any]] {
+object MapCodec extends SourceCodec[ParamsMap, Any] {
   override implicit def toSource(source: ParamsMap): Source[SourceT, Contract] = new MapSource(source)
 
   override implicit lazy val stringFormat: Formatter[Contract, String] = new TypeFormatter[String]

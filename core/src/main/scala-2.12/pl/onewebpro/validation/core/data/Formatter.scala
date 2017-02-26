@@ -1,6 +1,5 @@
 package pl.onewebpro.validation.core.data
 
-import cats.data.Validated.{Invalid, Valid}
 import pl.onewebpro.validation.core.error._
 import pl.onewebpro.validation.core.{Validation, Validator}
 
@@ -21,9 +20,14 @@ trait Formatter[S, R] {
   * Formatter for optional values
   */
 class OptionalFormatter[S, R](formatter: Formatter[S, R]) extends Formatter[S, Option[R]] {
-  override def apply(value: S): Validation[Option[R]] =
-    formatter.apply(value) match {
-      case Valid(v) => Validator.success(Some(v))
-      case Invalid(_) => Validator.success(None)
-    }
+
+  def apply(value: Option[S]): Validation[Option[R]] = value match {
+    case Some(v: S) => this.apply(v)
+    case _ => Validator.success(None)
+  }
+
+  override def apply(value: S): Validation[Option[R]] = value match {
+    case Some(_: S) => this.apply(value.asInstanceOf[Option[S]])
+    case _ => formatter.apply(value).map(Option.apply)
+  }
 }

@@ -5,10 +5,10 @@ import pl.onewebpro.validation.core.data.Formatter
 
 import scala.reflect.ClassTag
 
-class TypeFormatter[T: ClassTag] extends Formatter[Option[Any], T] {
-  override def apply(value: Option[Any]): Validation[T] =
+class TypeFormatter[T: ClassTag] extends Formatter[Any, T] {
+  override def apply(value: Any): Validation[T] =
     value match {
-      case Some(v: T) => Validator.success(v)
+      case v: T => Validator.success(v)
       case _ => error
     }
 }

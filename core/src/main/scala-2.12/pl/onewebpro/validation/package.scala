@@ -3,7 +3,7 @@ package pl.onewebpro
 import cats.data.{NonEmptyList, Validated => CatsValidated}
 import cats.kernel.Semigroup
 import pl.onewebpro.validation.basic.validator.{Max, Min, NonEmptyStringValidator, TextFieldValidator}
-import pl.onewebpro.validation.core.data.{OptionalFormatter, Formatter}
+import pl.onewebpro.validation.core.data.{Formatter, OptionalFormatter}
 import pl.onewebpro.validation.core.entity.{FieldMap, ValidationMap}
 import pl.onewebpro.validation.core.error.ComposedError
 import pl.onewebpro.validation.core.schema.Schema

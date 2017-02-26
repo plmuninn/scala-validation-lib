@@ -6,10 +6,10 @@ import pl.onewebpro.validation.core.data.Formatter
 
 import scala.reflect.ClassTag
 
-class CollectionFormatter[T: ClassTag](implicit formatter: Formatter[Option[Json], T]) extends CirceFormatter[Iterable[T]] {
-  override protected def apply(json: Json): Validation[Iterable[T]] =
+class CollectionFormatter[T: ClassTag](implicit formatter: Formatter[Json, T]) extends Formatter[Json, Iterable[T]] {
+  override def apply(json: Json): Validation[Iterable[T]] =
     json.asArray match {
-      case Some(array) => array.map(Option.apply).map(formatter.apply).swap
+      case Some(array) => array.map(formatter.apply).swap
       case _ => error
     }
 }

@@ -8,8 +8,8 @@ class CollectionTypeFormatterTest extends UnitTest {
   val formatter = new CollectionTypeFormatter[String]()
 
   "CollectionTypeFormatter" should "map properly" in {
-    formatter.apply(Some(List(""))).isValid shouldBe true
-    formatter.apply(Some(List(1))).isValid shouldBe false
-    formatter.apply(Some("")).isValid shouldBe false
+    formatter.apply(List("")).isValid shouldBe true
+    formatter.apply(List(1)).isValid shouldBe false
+    formatter.apply("").isValid shouldBe false
   }
 }

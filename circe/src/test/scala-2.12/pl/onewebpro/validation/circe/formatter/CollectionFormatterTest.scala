@@ -10,11 +10,11 @@ class CollectionFormatterTest extends UnitTest {
 
   "CollectionFormatter" should "handle valid json" in {
     val valid = Json.fromValues(Iterable(Json.fromString("one"), Json.fromString("two")))
-    validator.apply(Some(valid)).isValid shouldBe true
+    validator.apply(valid).isValid shouldBe true
   }
 
   it should "handle invalid json" in {
     val invalid = Json.fromValues(Iterable(Json.fromBoolean(true), Json.fromBoolean(false)))
-    validator.apply(Some(invalid)).isValid shouldBe false
+    validator.apply(invalid).isValid shouldBe false
   }
 }
