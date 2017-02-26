@@ -27,6 +27,7 @@ class OptionalFormatter[S, R](formatter: Formatter[S, R]) extends Formatter[S, O
   }
 
   override def apply(value: S): Validation[Option[R]] = value match {
+      // This is fixing Option[Option[....]] problem
     case Some(_: S) => this.apply(value.asInstanceOf[Option[S]])
     case _ => formatter.apply(value).map(Option.apply)
   }
